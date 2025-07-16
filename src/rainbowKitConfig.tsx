@@ -7,5 +7,5 @@ export default getDefaultConfig({
     appName: "TSender",
     projectId: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID!,
     chains: [sepolia, anvil, zksync],
-    ssr: false,
+    ssr: true,
 })
