@@ -7,7 +7,12 @@ import { useChainId, useConfig, useAccount, useWriteContract, useReadContract } 
 import { readContract, waitForTransactionReceipt } from "@wagmi/core";
 import { ButtonWithSpinner} from "@/components/ui/ButtonWithSpinner";
 import { SummaryTable } from "@/components/ui/SummaryTable";
-import { validateSingleAddress, validateMultipleAddresses, validateAmounts, validateSubmit } from "@/utils/inputValidation/inputValidation";
+import {
+    tokenAddressValidation,
+    validateMultipleAddresses,
+    validateAmounts,
+    validateSubmit,
+} from "@/utils/inputValidation/inputValidation";
 import { isAddress } from 'viem/utils'
 
 export default function AirdropForm(){
@@ -43,7 +48,7 @@ export default function AirdropForm(){
     const config = useConfig();
     const account = useAccount();
     const { isPending, writeContractAsync } = useWriteContract();
-    const { data: tokenBalance, refetch: refetchTokenBalance } = useReadContract({
+    const { data: tokenBalance, refetch: refetchTokenBalance, isError: isRequestTokenBalanceError } = useReadContract({
         abi: erc20Abi,
         address: tokenAddress as `0x${string}`,
         functionName: "balanceOf",
@@ -52,8 +57,9 @@ export default function AirdropForm(){
             enabled: isConnected && isAddress(tokenAddress),
         },
     })
+    const isRequestError = isRequestTokenBalanceError || tokenBalance === undefined;
 
-    const tokenAddressBundle: {msg:string, address:string} = useMemo(() => validateSingleAddress(tokenAddress), [tokenAddress])
+    const tokenAddressBundle: {msg:string, address:string} = useMemo(() => tokenAddressValidation(tokenAddress, isRequestError ), [tokenAddress])
     const recipientsBundle: {msg:string, addresses:string[]} = useMemo(() => validateMultipleAddresses(recipients), [recipients])
     const amountsBundle: {msg:string, amounts:number[], total:number} = useMemo(() => validateAmounts(amounts), [amounts])
     const total: number = amountsBundle.total
@@ -144,7 +150,10 @@ export default function AirdropForm(){
         <div className="space-y-6 flex flex-col items-center justify-center">
             <div className="mb-4">
                 <span className="font-semibold text-gray-700 text-lg">Account Balance :</span>
-                <span className="ml-2 font-mono text-blue-700 break-all">{tokenBalance as number}</span>
+                {isRequestError ?
+                    <span className="ml-2 font-mono text-red-700 break-all">Fail to read</span> :
+                    <span className="ml-2 font-mono text-blue-700 break-all">{tokenBalance as number}</span>
+                }
             </div>
             <InputField
                 label="Token Address"

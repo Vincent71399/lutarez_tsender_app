@@ -6,6 +6,16 @@ function normalizeAddress(address: string): string {
     return address;
 }
 
+export function tokenAddressValidation(input: string, isError: boolean): {msg:string, address:string} {
+    if(validateSingleAddress(input).msg !== "") {
+        return validateSingleAddress(input);
+    }else if(isError) {
+        return { msg: "Token Address is not valid", address: input };
+    }else{
+        return { msg: "", address: input };
+    }
+}
+
 export function validateSingleAddress(input: string): {msg:string, address:string} {
     if(input.length === 0){
         return { msg:"", address: ""}
