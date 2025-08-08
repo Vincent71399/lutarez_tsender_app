@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest"
-import { validateSingleAddress, validateMultipleAddresses, validateAmounts, validateSubmit } from "./inputValidation"
+import {
+    validateSingleAddress,
+    validateMultipleAddresses,
+    validateAmounts,
+    validateSubmit,
+    tokenAddressValidation
+} from "./inputValidation"
 
 describe("inputValidation", () => {
     // validateSingleAddress
@@ -20,6 +26,20 @@ describe("inputValidation", () => {
     it("address miss 0x", () => {
         const addressString = "f39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
         const result = validateSingleAddress(addressString)
+        expect(result.msg).toBe("")
+        expect(result.address).toBe("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+    })
+
+    it("token address is not valid", () => {
+        const addressString = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+        const result = tokenAddressValidation(addressString, true)
+        expect(result.msg).toBe("Token Address is not valid")
+        expect(result.address).toBe("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+    })
+
+    it("token address is not valid", () => {
+        const addressString = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+        const result = tokenAddressValidation(addressString, false)
         expect(result.msg).toBe("")
         expect(result.address).toBe("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
     })
