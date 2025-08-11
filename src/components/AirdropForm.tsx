@@ -59,7 +59,7 @@ export default function AirdropForm(){
     })
     const isRequestError = isRequestTokenBalanceError || tokenBalance === undefined;
 
-    const tokenAddressBundle: {msg:string, address:string} = useMemo(() => tokenAddressValidation(tokenAddress, isRequestError ), [tokenAddress])
+    const tokenAddressBundle: {msg:string, address:string} = useMemo(() => tokenAddressValidation(tokenAddress, isRequestError), [tokenAddress, isRequestError])
     const recipientsBundle: {msg:string, addresses:string[]} = useMemo(() => validateMultipleAddresses(recipients), [recipients])
     const amountsBundle: {msg:string, amounts:number[], total:number} = useMemo(() => validateAmounts(amounts), [amounts])
     const total: number = amountsBundle.total
