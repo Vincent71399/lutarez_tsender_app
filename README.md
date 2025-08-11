@@ -27,5 +27,13 @@ You'll need a `.env.local` the following environment variables:
 
 ### testing on local anvil
 
+you must install foundry in local https://getfoundry.sh/introduction/installation/
 
+then run commands below to start anvil
+
+```anvil --load-state web3/tsender-deployed.json```
+
+after anvil is started, you can connect your wallet to the local anvil https://ethereum.stackexchange.com/questions/164536/how-can-i-add-anvil-token-from-the-test-token-provided-to-my-metamask-account
+
+the mock token address is `0xe7f1725E7734CE288F8367e1Bb143E90bb3F0512` for testing
 
