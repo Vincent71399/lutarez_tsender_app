@@ -24,7 +24,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
+      - name: Enable corepack
+        run: corepack enable
+      - name: Prepare pnpm
+        if: steps.detect-package-manager.outputs.manager == 'pnpm'
+        run: corepack prepare pnpm@latest --activate
       - name: Detect package manager (prefer pnpm)
         id: pm
         shell: bash
