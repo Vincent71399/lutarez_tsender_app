@@ -32,6 +32,7 @@ jobs:
       - name: Build with Next.js
         env:
           NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID }}
+          NODE_ENV: ${{ secrets.NODE_ENV }}
         run: pnpm next build
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
