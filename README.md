@@ -1,3 +1,6 @@
+# Latest release at:
+https://vincent71399.github.io/lutarez_tsender_app/
+
 # TSender UI
 
 This project provides a user interface for the TSender protocol, enabling users to send tokens to a group of addresses across multiple networks in a single transaction
